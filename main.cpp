@@ -1,20 +1,7 @@
-#include <gtkmm.h>
+#include "Application.h"
 
-class MyWindow : public Gtk::Window
+int main(int argc, char *argv[])
 {
-public:
-  MyWindow();
-};
-
-MyWindow::MyWindow()
-{
-  set_title("Basic application");
-  set_default_size(200, 200);
-}
-
-int main(int argc, char* argv[])
-{
-  auto app = Gtk::Application::create("org.gtkmm.examples.base");
-
-  return app->make_window_and_run<MyWindow>(argc, argv);
+  gip::Application app;
+  app.run(argc, argv);
 }
