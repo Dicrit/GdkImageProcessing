@@ -5,6 +5,10 @@ project(GdkIamgeProcessingGUILib VERSION 1.0)
 
 add_library(GdkIamgeProcessingGUILib STATIC 
 Application.cpp 
-MainWindow.cpp)
+MainWindowController.cpp)
 
-target_include_directories(GdkIamgeProcessingGUILib PRIVATE ${GTKMM_INCLUDE_DIRS})
+
+configure_file(MainWindow.xml ${CMAKE_BINARY_DIR}/MainWindow.xml COPYONLY)
+
+
+target_include_directories(GdkIamgeProcessingGUILib PRIVATE "${CMAKE_SOURCE_DIR}/core" ${GTKMM_INCLUDE_DIRS})

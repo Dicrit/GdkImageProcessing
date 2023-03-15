@@ -6,7 +6,7 @@ project(GdkIamgeProcessing VERSION 1.0)
 add_executable(gdkIamgeProcessing main.cpp)
 
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(GTKMM REQUIRED gtkmm-4.0)
+pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 find_package(ImageMagick COMPONENTS Magick++)
 
 add_subdirectory(core)
