@@ -9,17 +9,34 @@ namespace gip
     }
 
     Image::Image(const std::string &path)
-    : image_(new Magick::Image(path))
+        : image_(new Magick::Image(path))
     {
     }
 
-    Image::~Image(){}
+    Image::~Image() {}
 
     void Image::accept(IImageVisitor *visitor)
     {
         Magick::Blob blob;
         image_->write(&blob);
         visitor->access_buffer(blob.data(), blob.length());
+    }
+
+    void Image::store_to_file(const std::string &path)
+    {
+        image_->write(path);
+    }
+
+    void Image::rotate(double degree)
+    {
+        image_->rotate(degree);
+    }
+
+    void Image::resize(size_t width, size_t height)
+    {
+        // image_->()
+        image_->quantizeDither(false);
+        image_->resize(Magick::Geometry(width, height));
     }
 
 } // namespace gip

@@ -2,6 +2,7 @@
 #include <gtkmm.h>
 #include <memory.h>
 #include "MainWindowController.h"
+#include "UserDataProvider.h"
 
 namespace gip
 {
@@ -20,7 +21,8 @@ namespace gip
             return -1;
         }
         window_guard.reset(window);
-        MainWindowController ctrl(builder.get());
+        UserDataProvider user_data_provider{window};
+        MainWindowController ctrl(builder.get(), &user_data_provider);
 
         return app->run(*window);
     }

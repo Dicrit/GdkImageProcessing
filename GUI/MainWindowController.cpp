@@ -3,19 +3,6 @@
 
 namespace gip
 {
-    MainWindowController::MainWindowController(Gtk::Builder *builder)
-    {
-        Gtk::Button *btn;
-        builder->get_widget("BtnLoadImage", btn);
-        if (!btn)
-        {
-            throw std::runtime_error("BtnLoadImage widget not found");
-        }
-        // btn.set_margin(10);
-        btn->signal_clicked().connect(sigc::mem_fun(*this,
-                                                    &MainWindowController::on_open_image_clicked));
-    }
-
     class ImageVisitor : public IImageVisitor
     {
     public:
@@ -35,8 +22,28 @@ namespace gip
         Glib::RefPtr<Gdk::Pixbuf> buf_;
     };
 
-    void
-    MainWindowController::on_open_image_clicked()
+    MainWindowController::MainWindowController(Gtk::Builder *builder, UserDataProvider *user_data_provider)
+        : user_data_provider_(user_data_provider)
+    {
+        auto connect_button_signal = [builder, this](const char *button_name, auto fnc)
+        {
+            Gtk::Button *btn;
+            builder->get_widget(button_name, btn);
+            if (!btn)
+            {
+                throw std::runtime_error("BtnLoadImage widget not found");
+            }
+            btn->signal_clicked().connect(sigc::mem_fun(*this, fnc));
+        };
+        connect_button_signal("BtnLoadImage", &MainWindowController::on_open_image_clicked);
+        connect_button_signal("BtnSaveImage", &MainWindowController::on_save_image_clicked);
+        connect_button_signal("BtnRotateImage", &MainWindowController::on_rotate_button_clicked);
+        connect_button_signal("BtnResizeImage", &MainWindowController::on_resize_button_clicked);
+    }
+
+    MainWindowController::~MainWindowController() {}
+
+    void MainWindowController::on_open_image_clicked()
     {
         Gtk::FileChooserDialog dialog("Please choose a file",
                                       Gtk::FILE_CHOOSER_ACTION_OPEN);
@@ -52,14 +59,67 @@ namespace gip
         std::string filename = dialog.get_filename();
         try
         {
-            gip::Image image(filename);
-            //for future. Try to get the buffer and show it on UI.
-            ImageVisitor visitor;
-            image.accept(&visitor);
+            image_ = std::make_unique<gip::Image>(filename);
         }
         catch (const std::exception &ex)
         {
+            // TODO: log erorr
             return;
+        }
+    }
+
+    void MainWindowController::on_save_image_clicked()
+    {
+        if (!image_)
+        {
+            return;
+        }
+        Gtk::FileChooserDialog dialog("Please choose a file",
+                                      Gtk::FILE_CHOOSER_ACTION_SAVE);
+        dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
+        dialog.add_button("_Save", Gtk::RESPONSE_OK);
+
+        int result = dialog.run();
+        if (result != Gtk::RESPONSE_OK)
+        {
+            return;
+        }
+
+        std::string filename = dialog.get_filename();
+        try
+        {
+            image_->store_to_file(filename);
+        }
+        catch (const std::exception &ex)
+        {
+            // TODO: log erorr
+            return;
+        }
+    }
+
+    void MainWindowController::on_rotate_button_clicked()
+    {
+        if (!image_)
+        {
+            return;
+        }
+        double degrees = 0;
+        if (user_data_provider_->request_rotation(&degrees))
+        {
+            image_->rotate(degrees);
+        }
+    }
+
+    void MainWindowController::on_resize_button_clicked()
+    {
+        if (!image_)
+        {
+            return;
+        }
+        size_t width = 0, height = 0;
+        if (user_data_provider_->request_resize_dims(&width, &height))
+        {
+            image_->resize(width, height);
         }
     }
 

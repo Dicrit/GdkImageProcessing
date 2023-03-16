@@ -23,6 +23,9 @@ namespace gip
     public:
         explicit Image(const std::string &path);
         void accept(IImageVisitor *visitor);
+        void store_to_file(const std::string& path);
+        void rotate(double degree);
+        void resize(size_t width, size_t height);
         ~Image();
 
     private:

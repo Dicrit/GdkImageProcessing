@@ -5,7 +5,9 @@ project(GdkIamgeProcessingGUILib VERSION 1.0)
 
 add_library(GdkIamgeProcessingGUILib STATIC 
 Application.cpp 
-MainWindowController.cpp)
+MainWindowController.cpp
+UserDataProvider.cpp
+)
 
 
 configure_file(MainWindow.xml ${CMAKE_BINARY_DIR}/MainWindow.xml COPYONLY)
