@@ -41,9 +41,10 @@
             <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkDrawingArea" id="ImageDrawArea">
+              <object class="GtkImage" id="ImagePreview">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="stock">gtk-missing-image</property>
               </object>
               <packing>
                 <property name="expand">False</property>

@@ -34,9 +34,16 @@ namespace gip
 
     void Image::resize(size_t width, size_t height)
     {
-        // image_->()
-        image_->quantizeDither(false);
         image_->resize(Magick::Geometry(width, height));
+    }
+
+    size_t Image::width() const
+    {
+        return image_->size().width();
+    }
+    size_t Image::heigth() const
+    {
+        return image_->size().height();
     }
 
 } // namespace gip

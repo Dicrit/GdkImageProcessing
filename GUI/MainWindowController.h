@@ -18,7 +18,10 @@ namespace gip
         void on_rotate_button_clicked();
         void on_resize_button_clicked();
 
+        void update_image();
+
         std::unique_ptr<gip::Image> image_;
+        Gtk::Image *image_preview_;
         UserDataProvider* user_data_provider_;
     };
 } // namespace gip
