@@ -8,8 +8,8 @@ cd build
 cmake ..
 cmake --build .
 ```
-3. run the program:
-`./gdkIamgeProcessing`
+3. run the program: `./gdkIamgeProcessing`
+
 Note that for now, this application should be accompanied with MainWindow.xml to work properly.
 
 ## Usage
