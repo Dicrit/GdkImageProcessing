@@ -26,6 +26,7 @@ namespace gip
         void store_to_file(const std::string& path);
         void rotate(double degree);
         void resize(size_t width, size_t height);
+        void add_watermark(const std::string& path);
         size_t width() const;
         size_t heigth() const;
         ~Image();

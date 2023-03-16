@@ -84,7 +84,16 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkButton" id="BtnWatermark">
+            <property name="label" translatable="yes">add watermark</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+          </object>
+          <packing>
+            <property name="left-attach">4</property>
+            <property name="top-attach">0</property>
+          </packing>
         </child>
       </object>
     </child>

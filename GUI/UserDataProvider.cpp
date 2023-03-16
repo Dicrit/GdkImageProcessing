@@ -80,4 +80,39 @@ namespace gip
         *out_height = h;
         return true;
     }
+
+    bool UserDataProvider::request_input_image_path(std::string *out_path)
+    {
+        Gtk::FileChooserDialog dialog("Please choose a file",
+                                      Gtk::FILE_CHOOSER_ACTION_OPEN);
+        dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
+        dialog.add_button("_Open", Gtk::RESPONSE_OK);
+
+        int result = dialog.run();
+        if (result != Gtk::RESPONSE_OK)
+        {
+            return false;
+        }
+
+        *out_path = dialog.get_filename();
+        return true;
+    }
+
+    bool UserDataProvider::request_output_image_path(std::string *out_path)
+    {
+        Gtk::FileChooserDialog dialog("Please choose a file",
+                                      Gtk::FILE_CHOOSER_ACTION_SAVE);
+        dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
+        dialog.add_button("_Save", Gtk::RESPONSE_OK);
+
+        int result = dialog.run();
+        if (result != Gtk::RESPONSE_OK)
+        {
+            return false;
+        }
+
+        *out_path = dialog.get_filename();
+        return true;
+    }
+
 } // namespace gip

@@ -37,6 +37,15 @@ namespace gip
         image_->resize(Magick::Geometry(width, height));
     }
 
+    void Image::add_watermark(const std::string &path)
+    {
+        Magick::Image watermark(path);
+        // logo.artifact();
+        // logo.composite(watermark, GravityType::South, CompositeOperator::DissolveCompositeOp);
+        image_->artifact("compose:args", "25%");
+        image_->composite(watermark, MagickCore::GravityType::SouthGravity, MagickCore::CompositeOperator::DissolveCompositeOp);
+    }
+
     size_t Image::width() const
     {
         return image_->size().width();

@@ -17,6 +17,7 @@ namespace gip
         void on_save_image_clicked();
         void on_rotate_button_clicked();
         void on_resize_button_clicked();
+        void on_watermark_button_clicked();
 
         void update_image();
 
