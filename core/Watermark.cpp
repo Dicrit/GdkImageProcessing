@@ -1,5 +1,5 @@
-#include <Magick++.h>
 #include "Watermark.h"
+#include <Magick++.h>
 #include "Image.h"
 
 namespace gip

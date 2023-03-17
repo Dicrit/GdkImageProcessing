@@ -15,13 +15,6 @@ namespace gip
 
     Image::~Image() {}
 
-    void Image::accept(IImageVisitor *visitor)
-    {
-        Magick::Blob blob;
-        image_->write(&blob);
-        visitor->access_buffer(blob.data(), blob.length());
-    }
-
     void Image::store_to_file(const std::string &path)
     {
         image_->write(path);

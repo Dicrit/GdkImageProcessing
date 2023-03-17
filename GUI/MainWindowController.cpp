@@ -1,29 +1,10 @@
 #include "MainWindowController.h"
 #include "Image.h"
 #include "Watermark.h"
+#include "ImageBuffer.h"
 
 namespace gip
 {
-    class ImageVisitor : public IImageVisitor
-    {
-    public:
-        virtual void access_buffer(const void *data, const size_t length) override
-        {
-            auto loader = Gdk::PixbufLoader::create();
-            loader->write(static_cast<const unsigned char *>(data), length);
-            loader->close();
-            buf_ = loader->get_pixbuf();
-        }
-
-        Glib::RefPtr<Gdk::Pixbuf> buffer()
-        {
-            return buf_;
-        }
-
-    private:
-        Glib::RefPtr<Gdk::Pixbuf> buf_;
-    };
-
     MainWindowController::MainWindowController(Gtk::Builder *builder, UserDataProvider *user_data_provider)
         : user_data_provider_(user_data_provider)
     {
@@ -149,9 +130,12 @@ namespace gip
             image_preview_->clear();
             return;
         }
-        ImageVisitor visitor;
-        image_->accept(&visitor);
-        auto surface = Gdk::Cairo::create_surface_from_pixbuf(visitor.buffer(), 1);
+        ImageBuffer buffer(*image_);
+        auto loader = Gdk::PixbufLoader::create();
+        loader->write(static_cast<const unsigned char *>(buffer.data()), buffer.size());
+        loader->close();
+        Glib::RefPtr<Gdk::Pixbuf> buf = loader->get_pixbuf();
+        auto surface = Gdk::Cairo::create_surface_from_pixbuf(buf, 1);
         image_preview_->set(surface);
     }
 

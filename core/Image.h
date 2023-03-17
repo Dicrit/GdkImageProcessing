@@ -12,17 +12,10 @@ namespace gip
 {
     void initialize_image_library(const char *path);
 
-    struct IImageVisitor
-    {
-        virtual ~IImageVisitor(){};
-        virtual void access_buffer(const void *data_, const size_t length) = 0;
-    };
-
     class Image : public IImage
     {
     public:
         explicit Image(const std::string &path);
-        void accept(IImageVisitor *visitor);
         void store_to_file(const std::string& path);
         void rotate(double degree);
         void resize(size_t width, size_t height);
