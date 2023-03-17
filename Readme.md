@@ -1,6 +1,6 @@
 # GdkImageProcessing
 ## How to build
-1. insall cmake, gdk3 and magick++.
+1. insall cmake, gtkmm3 and magick++.
 2. build using cmake:
 ```
 mkdir build
