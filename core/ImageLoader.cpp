@@ -4,11 +4,6 @@
 
 namespace gip
 {
-    void initialize_image_library(const char *path)
-    {
-        Magick::InitializeMagick(path);
-    }
-
     std::unique_ptr<IImage> ImageLoader::load_image(const std::string &path)
     {
         return std::make_unique<gip::Image>(std::make_unique<Magick::Image>(path));

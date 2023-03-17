@@ -3,8 +3,6 @@
 
 namespace gip
 {
-void initialize_image_library(const char *path);
-
     class ImageLoader
     {
     public:
