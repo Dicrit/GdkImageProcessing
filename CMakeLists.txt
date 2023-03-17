@@ -21,7 +21,7 @@ ${GTKMM_INCLUDE_DIRS}
 ${ImageMagick_INCLUDE_DIRS})
 
 target_link_libraries(gdkIamgeProcessing 
-GdkIamgeProcessingCoreLib
 GdkIamgeProcessingGUILib
+GdkIamgeProcessingCoreLib
 ${GTKMM_LIBRARIES}
  ${ImageMagick_LIBRARIES})

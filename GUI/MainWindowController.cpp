@@ -1,5 +1,6 @@
 #include "MainWindowController.h"
 #include "Image.h"
+#include "Watermark.h"
 
 namespace gip
 {
@@ -130,7 +131,8 @@ namespace gip
         }
         try
         {
-            image_->add_watermark(filename);
+            gip::Watermark watermark(filename);
+            watermark.apply_to_image(*image_);
             update_image();
         }
         catch (const std::exception &ex)
