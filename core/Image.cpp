@@ -5,7 +5,8 @@ namespace gip
 {
     Image::Image(std::unique_ptr<Magick::Image> image)
         : image_(std::move(image))
-    {}
+    {
+    }
 
     Image::~Image() {}
 
@@ -16,7 +17,9 @@ namespace gip
 
     void Image::resize(size_t width, size_t height)
     {
-        image_->resize(Magick::Geometry(width, height));
+        Magick::Geometry geometry(width, height);
+        geometry.aspect(true);
+        image_->resize(geometry);
     }
 
     size_t Image::width() const
@@ -28,7 +31,7 @@ namespace gip
         return image_->size().height();
     }
 
-    Magick::Image* Image::get_low_level_interface() const
+    Magick::Image *Image::get_low_level_interface() const
     {
         return image_.get();
     }
