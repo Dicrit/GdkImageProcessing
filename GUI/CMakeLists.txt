@@ -7,6 +7,7 @@ add_library(GdkIamgeProcessingGUILib STATIC
 Application.cpp 
 MainWindowController.cpp
 UserDataProvider.cpp
+ImageAdapter.cpp
 )
 
 

@@ -1,10 +1,10 @@
 #include "ImageBuffer.h"
 #include <Magick++.h>
-#include "Image.h"
+#include "IImage.h"
 
 namespace gip
 {
-    ImageBuffer::ImageBuffer(gip::Image &image)
+    ImageBuffer::ImageBuffer(gip::IImage &image)
         : blob_(new Magick::Blob)
     {
         image.get_low_level_interface()->write(blob_.get());

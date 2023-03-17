@@ -3,22 +3,11 @@
 
 namespace gip
 {
-    void initialize_image_library(const char *path)
-    {
-        Magick::InitializeMagick(path);
-    }
-
-    Image::Image(const std::string &path)
-        : image_(new Magick::Image(path))
-    {
-    }
+    Image::Image(std::unique_ptr<Magick::Image> image)
+        : image_(std::move(image))
+    {}
 
     Image::~Image() {}
-
-    void Image::store_to_file(const std::string &path)
-    {
-        image_->write(path);
-    }
 
     void Image::rotate(double degree)
     {

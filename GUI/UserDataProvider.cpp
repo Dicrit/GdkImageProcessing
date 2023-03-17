@@ -1,4 +1,8 @@
 #include "UserDataProvider.h"
+#include <gtkmm/messagedialog.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/window.h>
+#include <gtkmm/filechooserdialog.h>
 
 namespace gip
 {

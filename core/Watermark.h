@@ -1,5 +1,4 @@
 #pragma once
-#include "IWatermark.h"
 #include <string>
 #include <memory>
 
@@ -10,15 +9,15 @@ namespace Magick
 
 namespace gip
 {
-    class Image;
+    class IImage;
 
-    class Watermark : public IWatermark
+    class Watermark
     {
     public:
         explicit Watermark(const std::string &path);
         ~Watermark();
 
-        void apply_to_image(const gip::Image &image);
+        void apply_to_image(const gip::IImage &image);
 
     private:
         std::unique_ptr<Magick::Image> watermark_image_;

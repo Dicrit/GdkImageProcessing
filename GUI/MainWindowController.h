@@ -1,16 +1,17 @@
 #pragma once
-#include <gtkmm.h>
 #include <memory>
+#include <gtkmm/builder.h>
+#include <gtkmm/image.h>
 #include "UserDataProvider.h"
+#include "IImageAdapter.h"
 
 namespace gip
 {
-    class Image;
 
     class MainWindowController
     {
     public:
-        MainWindowController(Gtk::Builder* builder, UserDataProvider* user_data_provider);
+        MainWindowController(Gtk::Builder* builder, std::unique_ptr<IImageAdapter> image, UserDataProvider* user_data_provider);
         ~MainWindowController();
     private:
         void on_open_image_clicked();
@@ -21,7 +22,7 @@ namespace gip
 
         void update_image();
 
-        std::unique_ptr<gip::Image> image_;
+        std::unique_ptr<IImageAdapter> image_;
         Gtk::Image *image_preview_;
         UserDataProvider* user_data_provider_;
     };

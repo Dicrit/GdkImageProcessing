@@ -1,12 +1,15 @@
 #include "MainWindowController.h"
-#include "Image.h"
-#include "Watermark.h"
-#include "ImageBuffer.h"
+#include <gtkmm/button.h>
+#include <gdkmm/general.h>
+
 
 namespace gip
 {
-    MainWindowController::MainWindowController(Gtk::Builder *builder, UserDataProvider *user_data_provider)
-        : user_data_provider_(user_data_provider)
+    MainWindowController::MainWindowController(
+        Gtk::Builder *builder,
+        std::unique_ptr<IImageAdapter> image,
+        UserDataProvider *user_data_provider)
+        : image_(std::move(image)), user_data_provider_(user_data_provider)
     {
         builder->get_widget("ImagePreview", image_preview_);
 
@@ -31,14 +34,14 @@ namespace gip
 
     void MainWindowController::on_open_image_clicked()
     {
-        std::string filename;
-        if (!user_data_provider_->request_input_image_path(&filename))
+        std::string filepath;
+        if (!user_data_provider_->request_input_image_path(&filepath))
         {
             return;
         }
         try
         {
-            image_ = std::make_unique<gip::Image>(filename);
+            image_->load_image(filepath);
             update_image();
         }
         catch (const std::exception &ex)
@@ -50,7 +53,7 @@ namespace gip
 
     void MainWindowController::on_save_image_clicked()
     {
-        if (!image_)
+        if (!image_->loaded())
         {
             return;
         }
@@ -62,7 +65,7 @@ namespace gip
 
         try
         {
-            image_->store_to_file(filename);
+            image_->save_image(filename);
         }
         catch (const std::exception &ex)
         {
@@ -73,35 +76,35 @@ namespace gip
 
     void MainWindowController::on_rotate_button_clicked()
     {
-        if (!image_)
+        if (!image_->loaded())
         {
             return;
         }
         double degrees = 0;
         if (user_data_provider_->request_rotation(&degrees))
         {
-            image_->rotate(degrees);
+            image_->image()->rotate(degrees);
             update_image();
         }
     }
 
     void MainWindowController::on_resize_button_clicked()
     {
-        if (!image_)
+        if (!image_->loaded())
         {
             return;
         }
-        size_t width = image_->width(), height = image_->heigth();
+        size_t width = image_->image()->width(), height = image_->image()->heigth();
         if (user_data_provider_->request_resize_dims(&width, &height))
         {
-            image_->resize(width, height);
+            image_->image()->resize(width, height);
             update_image();
         }
     }
 
     void MainWindowController::on_watermark_button_clicked()
     {
-        if (!image_)
+        if (!image_->loaded())
         {
             return;
         }
@@ -112,8 +115,7 @@ namespace gip
         }
         try
         {
-            gip::Watermark watermark(filename);
-            watermark.apply_to_image(*image_);
+            image_->apply_watermark(filename);
             update_image();
         }
         catch (const std::exception &ex)
@@ -125,16 +127,13 @@ namespace gip
 
     void MainWindowController::update_image()
     {
-        if (!image_)
+        if (!image_->loaded())
         {
             image_preview_->clear();
             return;
         }
-        ImageBuffer buffer(*image_);
-        auto loader = Gdk::PixbufLoader::create();
-        loader->write(static_cast<const unsigned char *>(buffer.data()), buffer.size());
-        loader->close();
-        Glib::RefPtr<Gdk::Pixbuf> buf = loader->get_pixbuf();
+
+        Glib::RefPtr<Gdk::Pixbuf> buf = image_->get_pixbuf();
         auto surface = Gdk::Cairo::create_surface_from_pixbuf(buf, 1);
         image_preview_->set(surface);
     }

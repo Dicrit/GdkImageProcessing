@@ -6,6 +6,7 @@ add_library(GdkIamgeProcessingCoreLib STATIC
 Image.cpp
 Watermark.cpp
 ImageBuffer.cpp
+ImageLoader.cpp
 )
 
 target_include_directories(GdkIamgeProcessingCoreLib PRIVATE ${ImageMagick_INCLUDE_DIRS})

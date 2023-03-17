@@ -1,8 +1,10 @@
 #include "Application.h"
-#include <gtkmm.h>
-#include <memory.h>
+#include <memory>
+#include <gtkmm/application.h>
+#include <gtkmm/window.h>
 #include "MainWindowController.h"
 #include "UserDataProvider.h"
+#include "ImageAdapter.h"
 
 namespace gip
 {
@@ -22,7 +24,7 @@ namespace gip
         }
         window_guard.reset(window);
         UserDataProvider user_data_provider{window};
-        MainWindowController ctrl(builder.get(), &user_data_provider);
+        MainWindowController ctrl(builder.get(), std::make_unique<ImageAdapter>(),  &user_data_provider);
 
         return app->run(*window);
     }

@@ -1,7 +1,11 @@
 #pragma once
-#include <gtkmm.h>
 #include <memory>
 #include <string>
+
+namespace Gtk
+{
+    class Window;
+}
 
 namespace gip
 {

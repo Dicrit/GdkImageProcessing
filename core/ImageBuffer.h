@@ -8,11 +8,11 @@ namespace Magick
 
 namespace gip
 {
-    class Image;
+    class IImage;
     class ImageBuffer
     {
     public:
-        explicit ImageBuffer(gip::Image &image);
+        explicit ImageBuffer(gip::IImage &image);
         ~ImageBuffer();
         const void* data() const;
         size_t size() const;

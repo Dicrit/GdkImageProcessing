@@ -1,5 +1,5 @@
 #include "Application.h"
-#include "Image.h"
+#include "ImageLoader.h"
 
 int main(int argc, char *argv[])
 {
