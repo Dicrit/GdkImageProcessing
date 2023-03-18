@@ -7,7 +7,7 @@ namespace gip
 {
     MainWindowController::MainWindowController(
         Gtk::Builder *builder,
-        std::unique_ptr<IImageAdapter> image,
+        std::unique_ptr<IImageContainer> image,
         UserDataProvider *user_data_provider)
         : image_(std::move(image)), user_data_provider_(user_data_provider)
     {

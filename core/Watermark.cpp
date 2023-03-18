@@ -10,7 +10,7 @@ namespace gip
 
     Watermark::~Watermark(){}
 
-    void Watermark::apply_to_image(const gip::IImage &image)
+    void Watermark::apply_to_image(gip::IImage &image)
     {
         Magick::Image *img = image.get_low_level_interface();
         img->artifact("compose:args", "25%");

@@ -1,13 +1,13 @@
 #pragma once
 #include <glibmm/refptr.h>
 #include <gdkmm/pixbuf.h>
-#include "IImageAdapter.h"
+#include "IImageContainer.h"
 #include "ImageLoader.h"
 
 namespace gip
 {
     class Image;
-    class ImageAdapter : public IImageAdapter
+    class ImageAdapter : public IImageContainer
     {
     public:
         virtual ~ImageAdapter();

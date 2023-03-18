@@ -17,7 +17,7 @@ namespace gip
         explicit Watermark(const std::string &path);
         ~Watermark();
 
-        void apply_to_image(const gip::IImage &image);
+        void apply_to_image(gip::IImage &image);
 
     private:
         std::unique_ptr<Magick::Image> watermark_image_;

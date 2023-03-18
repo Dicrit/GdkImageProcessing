@@ -3,7 +3,7 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/image.h>
 #include "UserDataProvider.h"
-#include "IImageAdapter.h"
+#include "IImageContainer.h"
 
 namespace gip
 {
@@ -11,7 +11,7 @@ namespace gip
     class MainWindowController
     {
     public:
-        MainWindowController(Gtk::Builder* builder, std::unique_ptr<IImageAdapter> image, UserDataProvider* user_data_provider);
+        MainWindowController(Gtk::Builder* builder, std::unique_ptr<IImageContainer> image, UserDataProvider* user_data_provider);
         ~MainWindowController();
     private:
         void on_open_image_clicked();
@@ -22,7 +22,7 @@ namespace gip
 
         void update_image();
 
-        std::unique_ptr<IImageAdapter> image_;
+        std::unique_ptr<IImageContainer> image_;
         Gtk::Image *image_preview_;
         UserDataProvider* user_data_provider_;
     };

@@ -5,10 +5,10 @@
 
 namespace gip
 {
-    class IImageAdapter
+    class IImageContainer
     {
     public:
-        virtual ~IImageAdapter() {}
+        virtual ~IImageContainer() {}
         virtual void load_image(const std::string path) = 0;
         virtual bool loaded() const = 0;
         virtual gip::IImage *image() = 0;
