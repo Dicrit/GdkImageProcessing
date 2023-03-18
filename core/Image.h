@@ -12,7 +12,7 @@ namespace gip
         void resize(size_t width, size_t height) override;
         size_t width() const override;
         size_t heigth() const override;
-        Magick::Image* get_low_level_interface() const override;
+        Magick::Image* get_low_level_interface() override;
         ~Image();
     private:
         std::unique_ptr<Magick::Image> image_;

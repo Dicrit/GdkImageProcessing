@@ -7,7 +7,7 @@ namespace gip
     {
     public:
         std::unique_ptr<IImage> load_image(const std::string &path);
-        void store_image(const IImage *image, const std::string &path);
+        void store_image(IImage *image, const std::string &path);
     };
 
 } // namespace gip

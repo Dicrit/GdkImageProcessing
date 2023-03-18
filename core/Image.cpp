@@ -31,7 +31,7 @@ namespace gip
         return image_->size().height();
     }
 
-    Magick::Image *Image::get_low_level_interface() const
+    Magick::Image *Image::get_low_level_interface()
     {
         return image_.get();
     }
